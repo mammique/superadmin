@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        {% load bootstrap3 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'sa_auth/css/style.css' %}" />
+    </head>
+
+    <body>
+        {% if user.is_authenticated %}
+        <p id="userbar">
+            Bonjour {{ user }}
+            {% if user.is_superuser %}<a type="button" class="btn btn-primary" href="{% url 'admin:index' %}">Admin</a>{% endif %}
+            <a type="button" class="btn btn-danger" href="{% url 'sa_auth:logout' %}">Logout</a>
+        </p>
+        {% endif %}
+
+        {% bootstrap_messages %}
+    
+        <div class="row">
+            <div class="col-sm-6" id="logo">
+            </div>
+            <div class="col-sm-5">
+                <form action="" method="post" class="form">
+                    <h1>{{ title }}</h1>
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                        <button type="submit" class="btn btn-primary">{{ button }}</button>
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
